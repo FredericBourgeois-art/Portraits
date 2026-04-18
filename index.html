@@ -638,11 +638,82 @@
     }
     footer span { font-size: 10px; color: #ccc; letter-spacing: 0.08em; }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===== BURGER (visible mobile seulement) ===== */
+    .burger { display: none; }
+
+    /* ===== MENU MOBILE OVERLAY ===== */
+    .mob-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 300;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+    .mob-menu.open { display: flex; }
+    .mob-close {
+      position: absolute;
+      top: 24px; right: 28px;
+      background: none; border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 22px; cursor: pointer;
+      padding: 10px;
+      transition: color .2s;
+    }
+    .mob-close:hover { color: #fff; }
+    .mob-nav { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .mob-nav a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.55);
+      cursor: pointer;
+      padding: 10px 0;
+      transition: color .2s;
+      text-decoration: none;
+    }
+    .mob-nav a:hover { color: #fff; }
+    .mob-lang {
+      margin-top: 48px;
+    }
+    .mob-lang button {
+      background: none; border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px; letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.35); cursor: pointer;
+      text-transform: uppercase;
+    }
+    .mob-lang-active { color: #fff !important; font-weight: 500; }
+
+    /* ===== RESPONSIVE TABLET (≤960px) ===== */
     @media (max-width: 960px) {
       header { padding: 18px 24px; }
-      header.scrolled { padding: 14px 24px; }
-      nav { display: none; }
+      header.page-bg, header.scrolled { padding: 14px 24px; }
+      /* Cache la nav desktop, affiche le burger */
+      .header-right > nav { display: none; }
+      .header-right { gap: 16px; }
+      .burger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        background: none;
+        border: none;
+        padding: 6px;
+        cursor: pointer;
+        width: 32px;
+      }
+      .burger span {
+        display: block;
+        width: 22px;
+        height: 1.5px;
+        background: #fff;
+        transition: opacity .2s;
+      }
       #home { padding: 0 24px 56px; }
       .gallery-header, .section-header { padding: 40px 24px 28px; }
       .masonry { columns: 2; }
@@ -656,9 +727,58 @@
       footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
     }
 
+    /* ===== RESPONSIVE MOBILE (≤600px) ===== */
     @media (max-width: 600px) {
+      /* Hero : hauteur paysage limité, on voit plus large */
+      #home {
+        height: 72vw;
+        min-height: 320px;
+        max-height: 520px;
+        padding: 0 20px 40px;
+      }
+      /* Photo centrée sur le sujet, pas de recadrage bête */
+      #home .hero-bg {
+        background-size: cover;
+        background-position: center 20%;
+      }
+      #home h1 { font-size: clamp(32px, 9vw, 52px); }
+      .hero-sub { font-size: 9px; }
+      .hero-ctas { gap: 8px; }
+      .btn-primary, .btn-ghost { padding: 11px 18px; font-size: 9px; }
+      .scroll-hint { display: none; }
+
+      /* Galerie 1 colonne */
       .masonry { columns: 1; }
-      #home h1 { font-size: 48px; }
+
+      /* Galerie header */
+      .gallery-header { padding: 32px 16px 20px; }
+      .gallery-header h2 { font-size: 28px; }
+      .section-header { padding: 36px 16px 24px; }
+      .section-header h2 { font-size: 28px; }
+
+      /* Tarifs : 1 carte pleine largeur, padding réduit */
+      .pricing-grid { padding: 24px 16px 0; }
+      .pricing-card { padding: 28px 20px 32px; }
+      .pricing-amount { font-size: 44px; }
+      .pricing-note { padding: 20px 16px 0; }
+      .pixieset-banner { margin: 24px 16px 36px; padding: 24px 20px; }
+
+      /* About : photo compacte */
+      .about-img-wrap { min-height: 72vw; max-height: 72vw; }
+      .about-text-wrap { padding: 40px 20px; }
+      .about-text-wrap h2 { font-size: 26px; }
+
+      /* Contact */
+      .contact-left { padding: 44px 20px; }
+      .contact-left h2 { font-size: 30px; }
+      .contact-right { padding: 40px 20px; }
+
+      /* Footer */
+      footer { padding: 20px 16px; flex-direction: column; gap: 6px; text-align: center; }
+
+      /* Lightbox : boutons plus grands pour les pouces */
+      .lb-prev, .lb-next { font-size: 22px; padding: 28px 20px; }
+      .lb-close { top: 14px; right: 18px; font-size: 18px; }
     }
   </style>
 </head>
@@ -682,8 +802,30 @@
       <span class="sep">/</span>
       <span id="lbl-fr">FR</span>
     </button>
+    <button class="burger" id="burger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
+<!-- ===== MENU MOBILE OVERLAY ===== -->
+<div class="mob-menu" id="mob-menu">
+  <button class="mob-close" onclick="toggleMenu()">✕</button>
+  <nav class="mob-nav">
+    <a onclick="go('bnw');   toggleMenu()" data-en="Black &amp; White" data-fr="Noir &amp; Blanc">Black &amp; White</a>
+    <a onclick="go('color'); toggleMenu()" data-en="Colour"   data-fr="Couleur">Colour</a>
+    <a onclick="go('pricing');toggleMenu()" data-en="Pricing"  data-fr="Tarifs">Pricing</a>
+    <a onclick="go('about'); toggleMenu()" data-en="About"    data-fr="À propos">About</a>
+    <a onclick="go('contact');toggleMenu()" data-en="Contact"  data-fr="Contact">Contact</a>
+  </nav>
+  <div class="mob-lang">
+    <button onclick="toggleLang(); updateMobMenu()">
+      <span id="mob-lbl-en" class="mob-lang-active">EN</span>
+      <span style="opacity:.3"> / </span>
+      <span id="mob-lbl-fr">FR</span>
+    </button>
+  </div>
+</div>
 
 
 <!-- ===================================================================
@@ -947,7 +1089,8 @@
   let lang = 'en';
   let lbGallery = 'bnw';
   let lbIdx = 0;
-  const lbSize = { bnw: 0, color: 0 };
+  const lbSize    = { bnw: 0, color: 0 };
+  const lbSources = { bnw: [], color: [] };
 
   /* ================================================================
      FIX 1 — Navigation : header toujours sombre, texte toujours blanc
@@ -991,16 +1134,33 @@
     }
   });
 
+  /* ---- Mobile menu ---- */
+  function toggleMenu() {
+    document.getElementById('mob-menu').classList.toggle('open');
+    document.body.style.overflow =
+      document.getElementById('mob-menu').classList.contains('open') ? 'hidden' : '';
+  }
+  function updateMobMenu() {
+    document.getElementById('mob-lbl-en').classList.toggle('mob-lang-active', lang === 'en');
+    document.getElementById('mob-lbl-fr').classList.toggle('mob-lang-active', lang === 'fr');
+    /* Mettre à jour les liens du menu mobile */
+    document.querySelectorAll('.mob-nav a[data-en]').forEach(el => {
+      el.innerHTML = el.dataset[lang] || el.dataset.en;
+    });
+  }
+
   /* ---- Language ---- */
   function toggleLang() {
     lang = lang === 'en' ? 'fr' : 'en';
     document.getElementById('lbl-en').classList.toggle('lang-active', lang === 'en');
     document.getElementById('lbl-fr').classList.toggle('lang-active', lang === 'fr');
     document.querySelectorAll('[data-en]').forEach(el => {
-      if (el.id === 'count-bnw' || el.id === 'count-color') return; // géré dynamiquement
+      if (el.id === 'count-bnw' || el.id === 'count-color') return;
+      if (el.closest('.mob-nav')) return; // géré par updateMobMenu
       el.innerHTML = el.dataset[lang] || el.dataset.en;
     });
     updateCountLabels();
+    updateMobMenu();
   }
 
   function updateCountLabels() {
@@ -1016,30 +1176,45 @@
   function probeImage(src) {
     return new Promise(resolve => {
       const img = new Image();
-      img.onload  = () => resolve(true);
-      img.onerror = () => resolve(false);
-      img.src = src;
+      /* Timeout 8s pour ne pas bloquer sur GitHub Pages */
+      const timer = setTimeout(() => resolve(false), 8000);
+      img.onload  = () => { clearTimeout(timer); resolve(true);  };
+      img.onerror = () => { clearTimeout(timer); resolve(false); };
+      img.src = src + '?t=' + Date.now(); /* contourne le cache 404 */
     });
   }
 
   async function buildGallery(folder, containerId) {
     const container = document.getElementById(containerId);
-    const gallery   = folder; // 'bnw' ou 'color'
-    let count = 0;
-    let html  = '';
+    const gallery   = folder;
+    const MAX       = 60; /* max images par galerie */
 
-    for (let i = 1; i <= 99; i++) {
+    /* Sonde toutes les images EN PARALLELE — une image lente/absente
+       ne bloque plus les suivantes                                    */
+    const probes = [];
+    for (let i = 1; i <= MAX; i++) {
       const num = String(i).padStart(2, '0');
       const src = `images/${folder}/${num}.jpg`;
-      const ok  = await probeImage(src);
-      if (!ok) break;
-      html += `<div class="masonry-item" onclick="lb('${gallery}',${i - 1})">` +
-              `<img src="${src}" alt="Portrait ${num}" loading="lazy"></div>`;
-      count++;
+      probes.push(
+        probeImage(src).then(ok => ({ i, num, src, ok }))
+      );
     }
+    const results = await Promise.all(probes);
+
+    /* Garde uniquement les images qui existent, dans l'ordre */
+    const found = results.filter(r => r.ok);
+
+    /* Reconstruit les index lightbox de 0..N-1 */
+    let html = '';
+    found.forEach((r, idx) => {
+      html += `<div class="masonry-item" onclick="lb('${gallery}',${idx})">` +
+              `<img src="${r.src}" alt="Portrait ${r.num}" loading="lazy"></div>`;
+    });
 
     container.innerHTML = html || '<p style="padding:40px 48px;color:#bbb;font-size:13px">Aucune image trouvée dans ce dossier.</p>';
-    lbSize[gallery] = count;
+    /* Stocke les src pour la lightbox */
+    lbSources[gallery] = found.map(r => r.src);
+    lbSize[gallery]    = found.length;
     updateCountLabels();
   }
 
@@ -1172,9 +1347,8 @@
   }
   function lbRender() {
     resetZoom(false);
-    const num    = String(lbIdx + 1).padStart(2, '0');
-    const folder = lbGallery === 'bnw' ? 'bnw' : 'color';
-    content.innerHTML = `<img class="lb-img" src="images/${folder}/${num}.jpg" alt="Portrait ${num}">`;
+    const src = lbSources[lbGallery][lbIdx] || '';
+    content.innerHTML = `<img class="lb-img" src="${src}" alt="Portrait">`;
     document.getElementById('lb-count').textContent = `${lbIdx + 1} / ${lbSize[lbGallery]}`;
   }
 
