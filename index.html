@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frédéric Bourgeois — Portrait Photography Paris</title>
+  <meta name="description" content="Portrait photographer based in Paris. Dramatic, high-contrast portrait sessions at Paris's most iconic locations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #fff;
+      color: #111;
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { display: block; width: 100%; }
+    button { cursor: pointer; font-family: inherit; }
+
+    /* ===== HEADER ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background .3s, padding .3s;
+      background: transparent;
+    }
+    /* Sur les pages galerie/tarifs/about/contact : fond sombre permanent */
+    header.page-bg {
+      background: rgba(10,10,10,0.94);
+      backdrop-filter: blur(8px);
+      padding: 16px 48px;
+    }
+    /* Sur scroll (page accueil) : fond sombre également */
+    header.scrolled {
+      background: rgba(10,10,10,0.94);
+      backdrop-filter: blur(8px);
+      padding: 16px 48px;
+    }
+    /* Texte toujours blanc */
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .header-right { display: flex; align-items: center; gap: 40px; }
+    nav { display: flex; gap: 32px; align-items: center; }
+    nav a {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      transition: opacity .2s;
+      cursor: pointer;
+    }
+    nav a:hover { opacity: 0.5; }
+    nav a.active { border-bottom: 0.5px solid rgba(255,255,255,0.7); padding-bottom: 1px; }
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.45);
+      border: 0.5px solid rgba(255,255,255,0.22);
+      border-radius: 20px;
+      padding: 5px 13px;
+      background: transparent;
+      transition: all .2s;
+    }
+    .lang-toggle .lang-active { color: #fff; font-weight: 500; }
+    .lang-toggle .sep { opacity: 0.3; }
+
+    /* ===== SECTIONS ===== */
+    section { display: none; }
+    section.active { display: block; }
+
+    /* ===== HOME ===== */
+    #home {
+      height: 100vh;
+      min-height: 600px;
+      background: #0d0d0d;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 48px 72px;
+      overflow: hidden;
+    }
+    #home .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/hero.jpg');
+      background-size: cover;
+      background-position: center;
+      background-color: #0d0d0d;
+    }
+    #home .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.08) 55%);
+    }
+    #home .hero-content { position: relative; z-index: 1; max-width: 680px; }
+    #home h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 7.5vw, 96px);
+      font-weight: 300;
+      line-height: 0.93;
+      letter-spacing: 0.02em;
+      color: #fff;
+      margin-bottom: 22px;
+    }
+    #home .hero-sub {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 40px;
+    }
+    #home .hero-ctas { display: flex; gap: 12px; }
+
+    .btn-primary {
+      padding: 14px 30px;
+      background: #fff;
+      color: #111;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: none;
+      transition: opacity .2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost {
+      padding: 14px 30px;
+      background: transparent;
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 0.5px solid rgba(255,255,255,0.35);
+      transition: all .2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px; right: 52px;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .scroll-hint span {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line { width: 0.5px; height: 52px; background: rgba(255,255,255,0.2); }
+
+    /* ===== GALLERY HEADER ===== */
+    .gallery-header {
+      padding: 52px 48px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 0.5px solid #ebebeb;
+      margin-bottom: 6px;
+    }
+    .gallery-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      margin-bottom: 5px;
+    }
+    .gallery-header p { font-size: 10px; color: #bbb; letter-spacing: 0.14em; text-transform: uppercase; }
+
+    /* ===== MASONRY ===== */
+    .masonry { columns: 3; column-gap: 5px; padding: 5px; }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 5px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      max-height: 560px;
+    }
+    .masonry-item img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 560px;
+      object-fit: cover;
+      transition: transform .65s cubic-bezier(.25,.46,.45,.94);
+    }
+    .masonry-item:hover img { transform: scale(1.035); }
+
+    /* Placeholder blocks — remplace par de vraies images */
+    .ph { width: 100%; display: block; }
+
+    /* N&B — 12 blocs de hauteurs variées */
+    .ph-b1  { height: 420px; background: #1a1a1a; }
+    .ph-b2  { height: 280px; background: #3d3d3d; }
+    .ph-b3  { height: 360px; background: #888; }
+    .ph-b4  { height: 300px; background: #2a2a2a; }
+    .ph-b5  { height: 460px; background: #555; }
+    .ph-b6  { height: 265px; background: #c8c8c8; }
+    .ph-b7  { height: 390px; background: #444; }
+    .ph-b8  { height: 320px; background: #999; }
+    .ph-b9  { height: 440px; background: #1f1f1f; }
+    .ph-b10 { height: 290px; background: #767676; }
+    .ph-b11 { height: 350px; background: #333; }
+    .ph-b12 { height: 415px; background: #b0b0b0; }
+
+    /* Couleur — 12 blocs */
+    .ph-c1  { height: 400px; background: #c9a882; }
+    .ph-c2  { height: 295px; background: #7a9ab5; }
+    .ph-c3  { height: 375px; background: #b5826e; }
+    .ph-c4  { height: 340px; background: #8aab7a; }
+    .ph-c5  { height: 445px; background: #d4b89a; }
+    .ph-c6  { height: 270px; background: #6b8fa6; }
+    .ph-c7  { height: 365px; background: #c4956b; }
+    .ph-c8  { height: 310px; background: #9db88a; }
+    .ph-c9  { height: 425px; background: #b87d65; }
+    .ph-c10 { height: 295px; background: #7892a8; }
+    .ph-c11 { height: 370px; background: #d6c0a0; }
+    .ph-c12 { height: 450px; background: #8b6b58; }
+
+    /* ===== LIGHTBOX ===== */
+    @keyframes lb-in { from { opacity:0; } to { opacity:1; } }
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 200;
+    }
+    .lightbox.open { display: block; animation: lb-in .2s ease; }
+
+    /* Stage : zone de zoom, remplit tout l'écran */
+    #lb-stage {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    #lb-stage.zoomed   { cursor: grab; }
+    #lb-stage.dragging { cursor: grabbing; }
+
+    /* Conteneur transformé : positionné en 0,0, taille = 100% du stage */
+    #lb-content {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      transform-origin: 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lb-img {
+      display: block;
+      max-width: 96vw;
+      max-height: 96vh;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    /* Bouton fermer */
+    .lb-close {
+      position: absolute;
+      top: 20px; right: 28px;
+      z-index: 10;
+      color: rgba(255,255,255,0.4);
+      font-size: 20px;
+      line-height: 1;
+      background: none;
+      border: none;
+      transition: color .2s;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .lb-close:hover { color: #fff; }
+
+    /* Flèches navigation */
+    .lb-prev, .lb-next {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      z-index: 10;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.25);
+      font-size: 28px;
+      padding: 32px 36px;
+      transition: color .2s, opacity .25s;
+      cursor: pointer;
+    }
+    .lb-prev:hover, .lb-next:hover { color: rgba(255,255,255,0.9); }
+    .lb-prev { left: 0; }
+    .lb-next { right: 0; }
+    .lb-prev.hidden, .lb-next.hidden { opacity: 0; pointer-events: none; }
+
+    /* Compteur discret en bas */
+    .lb-counter {
+      position: absolute;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.2);
+      pointer-events: none;
+    }
+
+    /* ===== PRICING ===== */
+    #pricing { padding-top: 80px; }
+    .section-header { padding: 56px 48px 44px; border-bottom: 0.5px solid #ebebeb; }
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      margin-bottom: 10px;
+    }
+    .section-header p { font-size: 13px; color: #888; max-width: 500px; line-height: 1.75; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 52px 48px 0;
+      gap: 0;
+    }
+    .pricing-card {
+      padding: 40px 36px 44px;
+      border: 0.5px solid #e8e8e8;
+      position: relative;
+      transition: border-color .25s;
+    }
+    .pricing-card:hover { border-color: #aaa; }
+    .pricing-card + .pricing-card { border-left: none; }
+
+    .pricing-card.featured {
+      background: #0d0d0d;
+      border-color: #0d0d0d;
+    }
+    .pricing-card.featured .pricing-name,
+    .pricing-card.featured .pricing-amount,
+    .pricing-card.featured .pricing-desc,
+    .pricing-card.featured .pricing-features li { color: #fff; }
+    .pricing-card.featured .pricing-features { border-color: rgba(255,255,255,0.06); }
+    .pricing-card.featured .pricing-features li { border-color: rgba(255,255,255,0.06); }
+    .pricing-card.featured .pricing-features li::before { background: rgba(255,255,255,0.3); }
+    .pricing-card.featured .feat-label { display: block; }
+
+    .feat-label {
+      display: none;
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      color: #111;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      white-space: nowrap;
+    }
+
+    .pricing-name {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: 22px;
+    }
+    .pricing-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 58px;
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .pricing-amount sup { font-size: 22px; vertical-align: top; margin-top: 12px; display: inline-block; }
+    .pricing-desc { font-size: 12px; color: #888; margin-bottom: 28px; line-height: 1.7; margin-top: 8px; }
+    .pricing-features { list-style: none; margin-bottom: 36px; }
+    .pricing-features li {
+      font-size: 12px;
+      color: #555;
+      padding: 9px 0;
+      border-bottom: 0.5px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pricing-features li::before {
+      content: '';
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: #ccc;
+      flex-shrink: 0;
+    }
+    .pricing-cta {
+      display: block;
+      text-align: center;
+      padding: 13px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 0.5px solid #ddd;
+      background: transparent;
+      color: #111;
+      width: 100%;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+    .pricing-cta:hover { background: #111; color: #fff; border-color: #111; }
+    .pricing-card.featured .pricing-cta { border-color: rgba(255,255,255,0.2); color: #fff; }
+    .pricing-card.featured .pricing-cta:hover { background: #fff; color: #111; }
+
+    .pricing-note {
+      padding: 32px 48px 0;
+      font-size: 12px;
+      color: #bbb;
+      line-height: 1.85;
+      max-width: 600px;
+    }
+
+    /* ===== PIXIESET BANNER ===== */
+    .pixieset-banner {
+      margin: 44px 48px 56px;
+      padding: 34px 40px;
+      border: 0.5px solid #e8e8e8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+    .pixieset-banner-text h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      margin-bottom: 6px;
+    }
+    .pixieset-banner-text p { font-size: 12px; color: #888; line-height: 1.65; }
+    .pixieset-btn {
+      padding: 13px 28px;
+      background: #111;
+      color: #fff;
+      font-family: inherit;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: opacity .2s;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .pixieset-btn:hover { opacity: 0.78; }
+
+    /* ===== ABOUT ===== */
+    #about { padding-top: 80px; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 80px);
+    }
+    .about-img-wrap {
+      position: relative;
+      overflow: hidden;
+      min-height: 580px;
+      background-image: url('images/about.jpg');
+      background-size: cover;
+      background-position: center top;
+      background-color: #1a1a1a;
+    }
+    .about-text-wrap {
+      padding: 80px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .about-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: #ccc;
+      margin-bottom: 28px;
+    }
+    .about-text-wrap h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 300;
+      line-height: 1.18;
+      letter-spacing: 0.02em;
+      margin-bottom: 28px;
+    }
+    .about-text-wrap p { font-size: 14px; color: #555; line-height: 1.9; margin-bottom: 16px; }
+    .about-sig {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 0.5px solid #ebebeb;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #aaa;
+      line-height: 2.2;
+    }
+
+    /* ===== CONTACT ===== */
+    #contact { padding-top: 80px; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 80px);
+    }
+    .contact-left {
+      padding: 80px 60px;
+      background: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-left h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 22px;
+    }
+    .contact-left > p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.85; margin-bottom: 40px; }
+    .contact-details { display: flex; flex-direction: column; gap: 20px; }
+    .contact-detail-item { display: flex; flex-direction: column; gap: 4px; }
+    .cd-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
+    .cd-value { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .cd-value a { color: inherit; text-decoration: none; border-bottom: 0.5px solid rgba(255,255,255,0.18); padding-bottom: 2px; }
+
+    .pixieset-link-block {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 0.5px solid rgba(255,255,255,0.08);
+    }
+    .pixieset-link-block p { font-size: 11px; color: rgba(255,255,255,0.28); margin-bottom: 10px; }
+    .pixieset-link-block a {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      border-bottom: 0.5px solid rgba(255,255,255,0.18);
+      padding-bottom: 2px;
+      transition: color .2s;
+    }
+    .pixieset-link-block a:hover { color: #fff; }
+
+    .contact-right { padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; }
+    .contact-right h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 40px;
+    }
+    .form-field { margin-bottom: 30px; }
+    .form-field label {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: 10px;
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      width: 100%;
+      border: none;
+      border-bottom: 0.5px solid #ddd;
+      padding: 8px 0;
+      font-family: inherit;
+      font-size: 14px;
+      color: #111;
+      background: transparent;
+      outline: none;
+      transition: border-color .2s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus { border-color: #111; }
+    .form-field textarea { height: 76px; resize: none; line-height: 1.7; }
+    .form-submit {
+      padding: 14px 36px;
+      background: #111;
+      color: #fff;
+      font-family: inherit;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: none;
+      transition: opacity .2s;
+      margin-top: 8px;
+    }
+    .form-submit:hover { opacity: 0.78; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 28px 48px;
+      border-top: 0.5px solid #ebebeb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer span { font-size: 10px; color: #ccc; letter-spacing: 0.08em; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 960px) {
+      header { padding: 18px 24px; }
+      header.scrolled { padding: 14px 24px; }
+      nav { display: none; }
+      #home { padding: 0 24px 56px; }
+      .gallery-header, .section-header { padding: 40px 24px 28px; }
+      .masonry { columns: 2; }
+      .pricing-grid { grid-template-columns: 1fr; padding: 32px 24px 0; }
+      .pricing-card + .pricing-card { border-left: 0.5px solid #e8e8e8; border-top: none; }
+      .pricing-note { padding: 28px 24px 0; }
+      .pixieset-banner { margin: 32px 24px 44px; flex-direction: column; align-items: flex-start; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .about-img-wrap { min-height: 55vw; }
+      .about-text-wrap, .contact-left, .contact-right { padding: 52px 28px; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .masonry { columns: 1; }
+      #home h1 { font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===================================================================
+     HEADER
+=================================================================== -->
+<header id="hdr">
+  <span class="logo" onclick="go('home')">Frédéric Bourgeois</span>
+  <div class="header-right">
+    <nav>
+      <a data-section="bnw"     data-en="Black &amp; White" data-fr="Noir &amp; Blanc" onclick="go('bnw')">Black &amp; White</a>
+      <a data-section="color"   data-en="Colour"   data-fr="Couleur"   onclick="go('color')">Colour</a>
+      <a data-section="pricing" data-en="Pricing"  data-fr="Tarifs"    onclick="go('pricing')">Pricing</a>
+      <a data-section="about"   data-en="About"    data-fr="À propos"  onclick="go('about')">About</a>
+      <a data-section="contact" data-en="Contact"  data-fr="Contact"   onclick="go('contact')">Contact</a>
+    </nav>
+    <button class="lang-toggle" onclick="toggleLang()">
+      <span id="lbl-en" class="lang-active">EN</span>
+      <span class="sep">/</span>
+      <span id="lbl-fr">FR</span>
+    </button>
+  </div>
+</header>
+
+
+<!-- ===================================================================
+     HOME
+=================================================================== -->
+<section id="home" class="active">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1 data-en="Portrait<br>Photography<br>Paris" data-fr="Photographie<br>de Portrait<br>Paris">Portrait<br>Photography<br>Paris</h1>
+    <p class="hero-sub">Frédéric Bourgeois &nbsp;·&nbsp; Paris, France</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="go('bnw')" data-en="Black &amp; White" data-fr="Noir &amp; Blanc">Black &amp; White</button>
+      <button class="btn-ghost"   onclick="go('color')" data-en="Colour" data-fr="Couleur">Colour</button>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span data-en="Scroll" data-fr="Défiler">Scroll</span>
+  </div>
+</section>
+
+
+<!-- ===================================================================
+     GALERIE NOIR & BLANC
+=================================================================== -->
+<section id="bnw">
+  <div style="padding-top:80px">
+    <div class="gallery-header">
+      <div>
+        <h2 data-en="Black &amp; White" data-fr="Noir &amp; Blanc">Black &amp; White</h2>
+        <p id="count-bnw">— Portraits · Paris</p>
+      </div>
+    </div>
+    <div class="masonry" id="masonry-bnw"></div>
+
+    <footer>
+      <span>© 2025 Frédéric Bourgeois</span>
+      <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
+    </footer>
+  </div>
+</section>
+
+
+<!-- ===================================================================
+     GALERIE COULEUR
+=================================================================== -->
+<section id="color">
+  <div style="padding-top:80px">
+    <div class="gallery-header">
+      <div>
+        <h2 data-en="Colour" data-fr="Couleur">Colour</h2>
+        <p id="count-color">— Portraits · Paris</p>
+      </div>
+    </div>
+    <div class="masonry" id="masonry-color"></div>
+
+    <footer>
+      <span>© 2025 Frédéric Bourgeois</span>
+      <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
+    </footer>
+  </div>
+</section>
+
+
+<!-- ===================================================================
+     TARIFS / PRICING
+=================================================================== -->
+<section id="pricing">
+  <div class="section-header" style="margin-top:80px">
+    <h2 data-en="Sessions &amp; Pricing" data-fr="Séances &amp; Tarifs">Sessions &amp; Pricing</h2>
+    <p data-en="Private portrait sessions at Paris's most iconic locations. Professional retouching and high-resolution delivery included." data-fr="Séances de portraits privées dans les lieux emblématiques de Paris. Retouche professionnelle et livraison haute résolution incluses.">Private portrait sessions at Paris's most iconic locations. Professional retouching and high-resolution delivery included.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- DÉCOUVERTE -->
+    <div class="pricing-card">
+      <p class="pricing-name" data-en="Discovery" data-fr="Découverte">Discovery</p>
+      <div class="pricing-amount"><sup>€</sup>190</div>
+      <p class="pricing-desc" data-en="A concise, high-impact session for individuals or couples." data-fr="Une séance courte et percutante pour individuels ou couples.">A concise, high-impact session for individuals or couples.</p>
+      <ul class="pricing-features">
+        <li data-en="45-minute session"                   data-fr="Séance de 45 minutes">45-minute session</li>
+        <li data-en="1 Paris location"                    data-fr="1 lieu parisien">1 Paris location</li>
+        <li data-en="10 retouched photos"                 data-fr="10 photos retouchées">10 retouched photos</li>
+        <li data-en="Online gallery — download &amp; print" data-fr="Galerie en ligne — téléchargement &amp; tirages">Online gallery — download &amp; print</li>
+        <li data-en="Delivered within 7 days"             data-fr="Livraison sous 7 jours">Delivered within 7 days</li>
+      </ul>
+      <button class="pricing-cta" onclick="go('contact')" data-en="Book now" data-fr="Réserver">Book now</button>
+    </div>
+
+    <!-- SIGNATURE — featured -->
+    <div class="pricing-card featured">
+      <span class="feat-label" data-en="Most popular" data-fr="Le plus demandé">Most popular</span>
+      <p class="pricing-name" data-en="Signature" data-fr="Signature">Signature</p>
+      <div class="pricing-amount"><sup>€</sup>320</div>
+      <p class="pricing-desc" data-en="The full Paris portrait experience — multiple iconic locations." data-fr="L'expérience portrait Paris complète — plusieurs lieux iconiques.">The full Paris portrait experience — multiple iconic locations.</p>
+      <ul class="pricing-features">
+        <li data-en="2-hour session"                      data-fr="Séance de 2 heures">2-hour session</li>
+        <li data-en="2–3 Paris locations"                 data-fr="2–3 lieux parisiens">2–3 Paris locations</li>
+        <li data-en="25 retouched photos"                 data-fr="25 photos retouchées">25 retouched photos</li>
+        <li data-en="Online gallery — download &amp; print" data-fr="Galerie en ligne — téléchargement &amp; tirages">Online gallery — download &amp; print</li>
+        <li data-en="Delivered within 5 days"             data-fr="Livraison sous 5 jours">Delivered within 5 jours</li>
+        <li data-en="Costume change included"             data-fr="Changement de tenue inclus">Costume change included</li>
+      </ul>
+      <button class="pricing-cta" onclick="go('contact')" data-en="Book now" data-fr="Réserver">Book now</button>
+    </div>
+
+    <!-- PRESTIGE -->
+    <div class="pricing-card">
+      <p class="pricing-name" data-en="Prestige" data-fr="Prestige">Prestige</p>
+      <div class="pricing-amount"><sup>€</sup>490</div>
+      <p class="pricing-desc" data-en="A fully curated half-day session for a lasting portrait." data-fr="Une demi-journée exclusive pour un portrait d'exception.">A fully curated half-day session for a lasting portrait.</p>
+      <ul class="pricing-features">
+        <li data-en="Half-day (up to 4h)"                 data-fr="Demi-journée (jusqu'à 4h)">Half-day (up to 4h)</li>
+        <li data-en="4–5 Paris locations"                 data-fr="4–5 lieux parisiens">4–5 Paris locations</li>
+        <li data-en="50 retouched photos"                 data-fr="50 photos retouchées">50 retouched photos</li>
+        <li data-en="Online gallery — download &amp; print" data-fr="Galerie en ligne — téléchargement &amp; tirages">Online gallery — download &amp; print</li>
+        <li data-en="Delivered within 5 days"             data-fr="Livraison sous 5 jours">Delivered within 5 days</li>
+        <li data-en="Full styling consultation"           data-fr="Consultation style complète">Full styling consultation</li>
+        <li data-en="Priority booking"                    data-fr="Réservation prioritaire">Priority booking</li>
+      </ul>
+      <button class="pricing-cta" onclick="go('contact')" data-en="Book now" data-fr="Réserver">Book now</button>
+    </div>
+  </div>
+
+  <p class="pricing-note" data-en="All sessions take place at iconic Paris locations: Trocadéro, Bir-Hakeim, Haussmann boulevards and more. Travel within Paris is included. Custom requests welcome — contact me for a tailored quote." data-fr="Toutes les séances se déroulent dans les lieux emblématiques de Paris : Trocadéro, Bir-Hakeim, les grands boulevards haussmanniens et plus encore. Les déplacements dans Paris sont inclus. Demandes sur mesure bienvenues — contactez-moi pour un devis personnalisé.">All sessions take place at iconic Paris locations: Trocadéro, Bir-Hakeim, Haussmann boulevards and more. Travel within Paris is included. Custom requests welcome — contact me for a tailored quote.</p>
+
+  <!-- ===== BANDEAU PIXIESET ===== -->
+  <div class="pixieset-banner">
+    <div class="pixieset-banner-text">
+      <h3 data-en="Already a client? Access your private gallery." data-fr="Déjà client·e ? Accédez à votre galerie privée.">Already a client? Access your private gallery.</h3>
+      <p data-en="Download your high-resolution photos or order fine art prints directly from your personal gallery." data-fr="Téléchargez vos photos haute résolution ou commandez des tirages d'art depuis votre galerie personnelle.">Download your high-resolution photos or order fine art prints directly from your personal gallery.</p>
+    </div>
+    <a href="#" class="pixieset-btn" data-en="Access my gallery →" data-fr="Accéder à ma galerie →">Access my gallery →</a>
+  </div>
+
+  <footer>
+    <span>© 2025 Frédéric Bourgeois</span>
+    <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
+  </footer>
+</section>
+
+
+<!-- ===================================================================
+     À PROPOS / ABOUT
+=================================================================== -->
+<section id="about">
+  <div style="padding-top:80px">
+    <div class="about-grid">
+
+      <div class="about-img-wrap"></div>
+
+      <div class="about-text-wrap">
+        <p class="about-eyebrow" data-en="Portrait Photographer · Paris" data-fr="Photographe de Portrait · Paris">Portrait Photographer · Paris</p>
+        <h2 data-en="Dramatic portraits.<br>Timeless light.<br>Paris, always." data-fr="Portraits dramatiques.<br>Lumière intemporelle.<br>Paris, toujours.">Dramatic portraits.<br>Timeless light.<br>Paris, always.</h2>
+        <p data-en="I create high-contrast, cinematic portrait sessions at Paris's most iconic locations — Trocadéro, Bir-Hakeim, the grand Haussmann boulevards. My approach blends natural light with off-camera flash to sculpt faces with depth and intention." data-fr="Je crée des séances portrait cinématographiques et haut contraste dans les lieux les plus emblématiques de Paris — Trocadéro, Bir-Hakeim, les grands boulevards haussmanniens. Mon approche mêle lumière naturelle et flash déporté pour sculpter les visages avec profondeur et intention.">I create high-contrast, cinematic portrait sessions at Paris's most iconic locations — Trocadéro, Bir-Hakeim, the grand Haussmann boulevards. My approach blends natural light with off-camera flash to sculpt faces with depth and intention.</p>
+        <p data-en="Based in Paris, I work with international travellers, couples and individuals looking for a portrait that goes beyond the tourist snapshot — something they'll keep forever." data-fr="Basé à Paris, je travaille avec des voyageurs internationaux, des couples et des particuliers en quête d'un portrait qui dépasse l'instantané touristique — quelque chose qu'ils garderont pour toujours.">Based in Paris, I work with international travellers, couples and individuals looking for a portrait that goes beyond the tourist snapshot — something they'll keep forever.</p>
+        <div class="about-sig">
+          Frédéric Bourgeois<br>
+          <span data-en="Paris · Available via GetYourGuide &amp; Airbnb Experiences" data-fr="Paris · Disponible via GetYourGuide &amp; Airbnb Experiences">Paris · Available via GetYourGuide &amp; Airbnb Experiences</span>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2025 Frédéric Bourgeois</span>
+      <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
+    </footer>
+  </div>
+</section>
+
+
+<!-- ===================================================================
+     CONTACT
+=================================================================== -->
+<section id="contact">
+  <div style="padding-top:80px">
+    <div class="contact-grid">
+
+      <div class="contact-left">
+        <h2 data-en="Let's work<br>together." data-fr="Travaillons<br>ensemble.">Let's work<br>together.</h2>
+        <p data-en="Available for private portrait sessions in Paris. Also bookable via GetYourGuide and Airbnb Experiences." data-fr="Disponible pour des séances portrait privées à Paris. Réservable également via GetYourGuide et Airbnb Experiences.">Available for private portrait sessions in Paris. Also bookable via GetYourGuide and Airbnb Experiences.</p>
+        <div class="contact-details">
+          <div class="contact-detail-item">
+            <span class="cd-label">Email</span>
+            <span class="cd-value"><a href="mailto:studio@fredericbourgeois.art">studio@fredericbourgeois.art</a></span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="cd-label" data-en="Location" data-fr="Localisation">Location</span>
+            <span class="cd-value">Paris, France</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="cd-label" data-en="Response time" data-fr="Délai de réponse">Response time</span>
+            <span class="cd-value" data-en="Within 24 hours" data-fr="Sous 24 heures">Within 24 hours</span>
+          </div>
+        </div>
+
+        <div class="pixieset-link-block">
+          <p data-en="Already a client?" data-fr="Déjà client·e ?">Already a client?</p>
+          <a href="#" data-en="Access your private gallery →" data-fr="Accéder à votre galerie privée →">Access your private gallery →</a>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <h3 data-en="Send a message" data-fr="Envoyer un message">Send a message</h3>
+        <form onsubmit="handleForm(event)">
+          <div class="form-field">
+            <label data-en="Full name" data-fr="Nom complet">Full name</label>
+            <input type="text" name="name" required>
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="form-field">
+            <label data-en="Session type" data-fr="Type de séance">Session type</label>
+            <select name="session">
+              <option value=""            data-en="Select…"             data-fr="Choisir…">Select…</option>
+              <option value="discovery"   data-en="Discovery — €190"    data-fr="Découverte — 190€">Discovery — €190</option>
+              <option value="signature"   data-en="Signature — €320"    data-fr="Signature — 320€">Signature — €320</option>
+              <option value="prestige"    data-en="Prestige — €490"     data-fr="Prestige — 490€">Prestige — €490</option>
+              <option value="custom"      data-en="Custom enquiry"      data-fr="Demande sur mesure">Custom enquiry</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label data-en="Message" data-fr="Message">Message</label>
+            <textarea name="message"></textarea>
+          </div>
+          <button type="submit" class="form-submit" data-en="Send message" data-fr="Envoyer">Send message</button>
+        </form>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2025 Frédéric Bourgeois</span>
+      <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
+    </footer>
+  </div>
+</section>
+
+
+<!-- ===================================================================
+     LIGHTBOX
+=================================================================== -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="lbClose()">✕</button>
+  <div id="lb-stage">
+    <div id="lb-content"></div>
+  </div>
+  <button class="lb-prev" id="lb-prev" onclick="lbNav(-1)">&#8592;</button>
+  <button class="lb-next" id="lb-next" onclick="lbNav(1)">&#8594;</button>
+  <span class="lb-counter" id="lb-count"></span>
+</div>
+
+
+<!-- ===================================================================
+     JAVASCRIPT
+=================================================================== -->
+<script>
+  /* ---- State ---- */
+  let lang = 'en';
+  let lbGallery = 'bnw';
+  let lbIdx = 0;
+  const lbSize = { bnw: 0, color: 0 };
+
+  /* ================================================================
+     FIX 1 — Navigation : header toujours sombre, texte toujours blanc
+     FIX 2 — Scroll : on descend jusqu'au début de la galerie
+  ================================================================ */
+  function go(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav a').forEach(a => {
+      a.classList.toggle('active', a.dataset.section === id);
+    });
+
+    // FIX 1 — header : fond sombre sur toutes les pages sauf accueil (transparent au départ)
+    const hdr = document.getElementById('hdr');
+    if (id === 'home') {
+      hdr.classList.remove('page-bg');
+    } else {
+      hdr.classList.add('page-bg');
+    }
+
+    // FIX 2 — scroll : repositionne en haut puis descend sous le header fixe
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if (id !== 'home') {
+      // Légère pause pour laisser le DOM s'afficher, puis scroll sous le header (80px)
+      setTimeout(() => {
+        const section = document.getElementById(id);
+        const firstContent = section.querySelector('.gallery-header, .section-header, .about-grid, .contact-grid');
+        if (firstContent) {
+          const top = firstContent.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        }
+      }, 30);
+    }
+  }
+
+  /* ---- Scroll header (page accueil) ---- */
+  window.addEventListener('scroll', () => {
+    const hdr = document.getElementById('hdr');
+    if (!hdr.classList.contains('page-bg')) {
+      hdr.classList.toggle('scrolled', window.scrollY > 40);
+    }
+  });
+
+  /* ---- Language ---- */
+  function toggleLang() {
+    lang = lang === 'en' ? 'fr' : 'en';
+    document.getElementById('lbl-en').classList.toggle('lang-active', lang === 'en');
+    document.getElementById('lbl-fr').classList.toggle('lang-active', lang === 'fr');
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (el.id === 'count-bnw' || el.id === 'count-color') return; // géré dynamiquement
+      el.innerHTML = el.dataset[lang] || el.dataset.en;
+    });
+    updateCountLabels();
+  }
+
+  function updateCountLabels() {
+    const bnwEl   = document.getElementById('count-bnw');
+    const colorEl = document.getElementById('count-color');
+    if (bnwEl)   bnwEl.textContent   = lang === 'fr' ? `${lbSize.bnw} Portraits · Paris`   : `${lbSize.bnw} Portraits · Paris`;
+    if (colorEl) colorEl.textContent = lang === 'fr' ? `${lbSize.color} Portraits · Paris` : `${lbSize.color} Portraits · Paris`;
+  }
+
+  /* ================================================================
+     FIX 3 — Galeries dynamiques : détection automatique du nombre d'images
+  ================================================================ */
+  function probeImage(src) {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.onload  = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = src;
+    });
+  }
+
+  async function buildGallery(folder, containerId) {
+    const container = document.getElementById(containerId);
+    const gallery   = folder; // 'bnw' ou 'color'
+    let count = 0;
+    let html  = '';
+
+    for (let i = 1; i <= 99; i++) {
+      const num = String(i).padStart(2, '0');
+      const src = `images/${folder}/${num}.jpg`;
+      const ok  = await probeImage(src);
+      if (!ok) break;
+      html += `<div class="masonry-item" onclick="lb('${gallery}',${i - 1})">` +
+              `<img src="${src}" alt="Portrait ${num}" loading="lazy"></div>`;
+      count++;
+    }
+
+    container.innerHTML = html || '<p style="padding:40px 48px;color:#bbb;font-size:13px">Aucune image trouvée dans ce dossier.</p>';
+    lbSize[gallery] = count;
+    updateCountLabels();
+  }
+
+  /* Lance les deux galeries en parallèle au chargement */
+  buildGallery('bnw',   'masonry-bnw');
+  buildGallery('color', 'masonry-color');
+
+  /* ================================================================
+     LIGHTBOX — zoom molette · double-clic · drag · pinch mobile
+     Formule zoom-au-curseur :
+       tx_new = cursor_x - (cursor_x - tx_old) * (s_new / s_old)
+       ty_new = cursor_y - (cursor_y - ty_old) * (s_new / s_old)
+     avec cursor en coordonnées relatives au coin haut-gauche du stage,
+     et transform-origin: 0 0 sur #lb-content (absolute, 100% x 100%).
+  ================================================================ */
+  const stage   = document.getElementById('lb-stage');
+  const content = document.getElementById('lb-content');
+  const btnPrev = document.getElementById('lb-prev');
+  const btnNext = document.getElementById('lb-next');
+
+  let s = 1, tx = 0, ty = 0;
+  const S_MIN = 1, S_MAX = 8, S_STEP = 1.15;
+
+  function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+
+  function clampPan() {
+    /* Le contenu transformé couvre [tx .. tx+sw*s] x [ty .. ty+sh*s].
+       Pour ne pas laisser d'espace vide on veut :
+       tx <= 0  et  tx >= sw*(1-s)  (symétrique en y) */
+    const sw = stage.offsetWidth, sh = stage.offsetHeight;
+    tx = clamp(tx, sw * (1 - s), 0);
+    ty = clamp(ty, sh * (1 - s), 0);
+  }
+
+  function applyZoom(animate) {
+    content.style.transition = animate ? 'transform .18s cubic-bezier(.25,.46,.45,.94)' : 'none';
+    content.style.transform  = `translate(${tx}px,${ty}px) scale(${s})`;
+    const zoomed = s > 1.05;
+    stage.classList.toggle('zoomed',   zoomed);
+    btnPrev.classList.toggle('hidden', zoomed);
+    btnNext.classList.toggle('hidden', zoomed);
+  }
+
+  function resetZoom(animate) {
+    s = 1; tx = 0; ty = 0;
+    applyZoom(animate);
+  }
+
+  /* Zoom centré sur (cx, cy) en coordonnées écran */
+  function zoomAt(cx, cy, factor) {
+    const rect  = stage.getBoundingClientRect();
+    const rx    = cx - rect.left;   /* curseur relatif au stage */
+    const ry    = cy - rect.top;
+    const sNew  = clamp(s * factor, S_MIN, S_MAX);
+    const ratio = sNew / s;
+    tx = rx - (rx - tx) * ratio;
+    ty = ry - (ry - ty) * ratio;
+    s  = sNew;
+    clampPan();
+    applyZoom(false);
+  }
+
+  /* ---- Molette ---- */
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    zoomAt(e.clientX, e.clientY, e.deltaY < 0 ? S_STEP : 1 / S_STEP);
+  }, { passive: false });
+
+  /* ---- Clic simple : zoom 2x centre sur le curseur ---- */
+  /* ---- Sur image zoomee : drag pour se deplacer        ---- */
+  let dragging = false, didDrag = false, dx0, dy0, tx0, ty0;
+
+  stage.addEventListener('mousedown', e => {
+    didDrag = false;
+    dx0 = e.clientX; dy0 = e.clientY;
+    if (s > 1.05) {
+      dragging = true;
+      tx0 = tx; ty0 = ty;
+      stage.classList.add('dragging');
+      e.preventDefault();
+    }
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    if (Math.abs(e.clientX - dx0) > 3 || Math.abs(e.clientY - dy0) > 3) didDrag = true;
+    tx = tx0 + (e.clientX - dx0);
+    ty = ty0 + (e.clientY - dy0);
+    clampPan();
+    applyZoom(false);
+  });
+  window.addEventListener('mouseup', () => {
+    dragging = false;
+    stage.classList.remove('dragging');
+  });
+
+  stage.addEventListener('click', e => {
+    if (didDrag) return;
+    if (e.target === stage && s <= 1.05) { lbClose(); return; }
+    if (s > 1.05) return;
+    const rect = stage.getBoundingClientRect();
+    const rx   = e.clientX - rect.left;
+    const ry   = e.clientY - rect.top;
+    const sNew = 2;
+    tx = rx - rx * sNew;
+    ty = ry - ry * sNew;
+    s  = sNew;
+    clampPan();
+    applyZoom(true);
+  });
+
+
+  /* ---- Fonctions lightbox ---- */
+  function lb(gallery, idx) {
+    lbGallery = gallery;
+    lbIdx     = idx;
+    lbRender();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function lbClose() {
+    if (s > 1.05) { resetZoom(true); return; }
+    resetZoom(false);
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function lbNav(dir) {
+    if (s > 1.05) return;
+    lbIdx = (lbIdx + dir + lbSize[lbGallery]) % lbSize[lbGallery];
+    lbRender();
+  }
+  function lbRender() {
+    resetZoom(false);
+    const num    = String(lbIdx + 1).padStart(2, '0');
+    const folder = lbGallery === 'bnw' ? 'bnw' : 'color';
+    content.innerHTML = `<img class="lb-img" src="images/${folder}/${num}.jpg" alt="Portrait ${num}">`;
+    document.getElementById('lb-count').textContent = `${lbIdx + 1} / ${lbSize[lbGallery]}`;
+  }
+
+  /* ---- Clavier ---- */
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape')     lbClose();
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'ArrowLeft')  lbNav(-1);
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    if (e.key === '+' || e.key === '=') zoomAt(cx, cy, S_STEP * S_STEP);
+    if (e.key === '-')                  zoomAt(cx, cy, 1 / (S_STEP * S_STEP));
+    if (e.key === '0')                  resetZoom(true);
+  });
+
+  /* ================================================================
+     FIX 4 — Formulaire : envoi vers fredbourgeoisphoto@gmail.com
+     Méthode : ouverture du client mail avec les données pré-remplies.
+     Aucun service tiers requis — fonctionne immédiatement.
+  ================================================================ */
+  function handleForm(e) {
+    e.preventDefault();
+    const data    = new FormData(e.target);
+    const name    = data.get('name')    || '';
+    const email   = data.get('email')   || '';
+    const session = data.get('session') || '';
+    const message = data.get('message') || '';
+
+    const subject = `Portrait session — ${name}`;
+    const body    = `Name / Nom : ${name}\nEmail : ${email}\nSession : ${session}\n\nMessage :\n${message}`;
+
+    window.location.href =
+      `mailto:fredbourgeoisphoto@gmail.com` +
+      `?subject=${encodeURIComponent(subject)}` +
+      `&body=${encodeURIComponent(body)}`;
+
+    const btn = e.target.querySelector('.form-submit');
+    const orig = btn.textContent;
+    btn.textContent = lang === 'fr' ? 'Client mail ouvert ✓' : 'Mail client opened ✓';
+    btn.style.opacity = '0.6';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.opacity = '1';
+      btn.disabled = false;
+      e.target.reset();
+    }, 4000);
+  }
+</script>
+
+</body>
+</html>
