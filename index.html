@@ -729,17 +729,19 @@
 
     /* ===== RESPONSIVE MOBILE (≤600px) ===== */
     @media (max-width: 600px) {
-      /* Hero : hauteur paysage limité, on voit plus large */
+      /* Hero mobile : plein écran vertical avec image portrait dédiée */
       #home {
-        height: 72vw;
-        min-height: 320px;
-        max-height: 520px;
-        padding: 0 20px 40px;
+        height: 100svh;
+        height: 100vh; /* fallback navigateurs anciens */
+        min-height: 500px;
+        padding: 0 20px 52px;
       }
-      /* Photo centrée sur le sujet, pas de recadrage bête */
+      /* Image portrait dédiée au mobile — fichier : images/hero-mobile.jpg
+         Format conseillé : 900×1600px (ratio 9:16), cadrage buste/visage  */
       #home .hero-bg {
+        background-image: url('images/hero-mobile.jpg');
         background-size: cover;
-        background-position: center 20%;
+        background-position: center top;
       }
       #home h1 { font-size: clamp(32px, 9vw, 52px); }
       .hero-sub { font-size: 9px; }
