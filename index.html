@@ -3,8 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Frédéric Bourgeois — Portrait Photography Paris</title>
-  <meta name="description" content="Portrait photographer based in Paris. Dramatic, high-contrast portrait sessions at Paris's most iconic locations.">
+
+  <!-- ═══ SEO PRIMARY ═══ -->
+  <title>Frédéric Bourgeois — Portrait Photographer Paris | Fine Art Photography</title>
+  <meta name="description" content="Frédéric Bourgeois — Portrait photographer in Paris. Cinematic, high-contrast portrait sessions at Trocadéro, Bir-Hakeim and iconic Paris locations. Fine art prints, private galleries, actor books. Available in English & French.">
+  <meta name="keywords" content="portrait photographer Paris, photographie portrait Paris, fine art photography Paris, séance photo Paris, portrait session Paris, photographer Paris France, Trocadéro photographer, Bir-Hakeim photo session, book comédien Paris, actor book photographer Paris, couple portrait Paris, family portrait Paris, luxury portrait photography, photographe portrait Paris, fine art print Paris, photo session Eiffel Tower, international photographer Paris">
+  <meta name="author" content="Frédéric Bourgeois">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://fredericbourgeois.art/">
+
+  <!-- ═══ OPEN GRAPH (partage réseaux sociaux) ═══ -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://fredericbourgeois.art/">
+  <meta property="og:title"       content="Frédéric Bourgeois — Portrait Photographer Paris">
+  <meta property="og:description" content="Cinematic portrait sessions in Paris. Trocadéro, Bir-Hakeim, grand boulevards. Fine art prints & private galleries.">
+  <meta property="og:image"       content="https://fredericbourgeois.art/images/hero.jpg">
+  <meta property="og:locale"      content="en_US">
+  <meta property="og:locale:alternate" content="fr_FR">
+
+  <!-- ═══ TWITTER / X CARD ═══ -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Frédéric Bourgeois — Portrait Photographer Paris">
+  <meta name="twitter:description" content="Cinematic portrait sessions in Paris. Fine art photography.">
+  <meta name="twitter:image"       content="https://fredericbourgeois.art/images/hero.jpg">
+
+  <!-- ═══ SCHEMA.ORG JSON-LD ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://fredericbourgeois.art",
+    "name": "Frédéric Bourgeois — Portrait Photographer",
+    "description": "Cinematic portrait photography in Paris. Private sessions at Trocadéro, Bir-Hakeim and iconic Paris locations. Fine art prints, actor books, couple portraits.",
+    "url": "https://fredericbourgeois.art",
+    "image": "https://fredericbourgeois.art/images/hero.jpg",
+    "email": "studio@fredericbourgeois.art",
+    "address": { "@type": "PostalAddress", "addressLocality": "Paris", "addressCountry": "FR" },
+    "geo": { "@type": "GeoCoordinates", "latitude": 48.8566, "longitude": 2.3522 },
+    "priceRange": "€€€",
+    "openingHours": "Mo-Su 08:00-20:00",
+    "sameAs": ["https://www.instagram.com/fredericbourgeois"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Portrait Sessions",
+      "itemListElement": [
+        { "@type": "Offer", "name": "Discovery",  "price": "190", "priceCurrency": "EUR" },
+        { "@type": "Offer", "name": "Book",       "price": "420", "priceCurrency": "EUR" },
+        { "@type": "Offer", "name": "Signature",  "price": "320", "priceCurrency": "EUR" },
+        { "@type": "Offer", "name": "Prestige",   "price": "590", "priceCurrency": "EUR" }
+      ]
+    }
+  }
+  </script>
+
+  <!-- ═══ GOOGLE ANALYTICS ═══ -->
+  <!-- Remplace G-XXXXXXXXXX par ton ID GA4 (https://analytics.google.com) -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet">
@@ -21,7 +82,61 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-    img { display: block; width: 100%; }
+
+    /* ===== SPLASH SCREEN ===== */
+    /* Splash : apparaît 0.4s, tient 1s, fond disparaît en 1s */
+    @keyframes splash-bg-out  { 0%{opacity:1} 55%{opacity:1} 100%{opacity:0} }
+    @keyframes splash-logo-in { 0%{opacity:0;letter-spacing:0.08em} 35%{opacity:1;letter-spacing:0.22em} 65%{opacity:1;letter-spacing:0.22em} 100%{opacity:0;letter-spacing:0.28em} }
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: #0d0d0d;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: splash-bg-out 2.4s cubic-bezier(.4,0,.6,1) forwards;
+      pointer-events: none;
+    }
+    #splash .splash-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3.5vw, 36px);
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #fff;
+      animation: splash-logo-in 2.4s cubic-bezier(.4,0,.6,1) forwards;
+    }
+
+    /* ===== TRANSITIONS ENTRE PAGES ===== */
+    @keyframes page-in { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    section.active { animation: page-in .38s cubic-bezier(.25,.46,.45,.94); }
+
+    /* ===== BACK TO TOP ===== */
+    #back-top {
+      position: fixed;
+      bottom: 32px; right: 36px;
+      z-index: 50;
+      width: 40px; height: 40px;
+      background: rgba(10,10,10,0.75);
+      backdrop-filter: blur(6px);
+      border: 0.5px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s;
+    }
+    #back-top.visible { opacity: 1; pointer-events: auto; }
+    #back-top svg { width: 14px; height: 14px; fill: none; stroke: rgba(255,255,255,0.7); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    #back-top:hover svg { stroke: #fff; }
+    img {
+      display: block; width: 100%;
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    /* Protection photos : le JS gère le contextmenu et le drag silencieusement */
     button { cursor: pointer; font-family: inherit; }
 
     /* ===== HEADER ===== */
@@ -322,16 +437,7 @@
     .lb-prev.hidden, .lb-next.hidden { opacity: 0; pointer-events: none; }
 
     /* Compteur discret en bas */
-    .lb-counter {
-      position: absolute;
-      bottom: 20px; left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: rgba(255,255,255,0.2);
-      pointer-events: none;
-    }
+    .lb-counter { display: none; }
 
     /* ===== PRICING ===== */
     #pricing { padding-top: 80px; }
@@ -445,8 +551,95 @@
       font-size: 12px;
       color: #bbb;
       line-height: 1.85;
-      max-width: 600px;
+      max-width: 640px;
     }
+
+    /* ---- Options ---- */
+    .pricing-options {
+      padding: 44px 48px 0;
+    }
+    .options-title {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #bbb;
+      margin-bottom: 20px;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border-top: 0.5px solid #ebebeb;
+    }
+    .opt-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 24px;
+      padding: 12px 0;
+      border-bottom: 0.5px solid #ebebeb;
+    }
+    .opt-label {
+      font-size: 12px;
+      color: #555;
+      /* Ligne pointillée entre label et prix */
+      position: relative;
+    }
+    .opt-price {
+      font-size: 12px;
+      color: #111;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      min-width: 72px;
+    }
+    .opt-link  { cursor: pointer; border-bottom: 0.5px solid #ddd; padding-bottom: 1px; transition: color .2s; }
+    .opt-link:hover { color: #888; }
+    /* Ligne consultation dans Discovery — distinguée visuellement */
+    li.opt-extra {
+      font-size: 11px;
+      color: #aaa;
+      border-top: 0.5px solid #f0f0f0;
+      margin-top: 6px;
+      padding-top: 8px;
+      list-style: none;
+    }
+    li.opt-extra::before { background: #e0e0e0 !important; }
+
+    /* ---- Encart sur-mesure ---- */
+    .bespoke-block {
+      margin: 52px 48px 0;
+      padding: 40px 48px;
+      border: 0.5px solid #ebebeb;
+      text-align: center;
+    }
+    .bespoke-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      margin-bottom: 12px;
+    }
+    .bespoke-text {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 0 auto 28px;
+    }
+    .bespoke-cta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: none;
+      border: 0.5px solid #ccc;
+      color: #111;
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .bespoke-cta:hover { background: #111; color: #fff; border-color: #111; }
 
     /* ===== PIXIESET BANNER ===== */
     .pixieset-banner {
@@ -637,6 +830,16 @@
       align-items: center;
     }
     footer span { font-size: 10px; color: #ccc; letter-spacing: 0.08em; }
+    .footer-social { display: flex; gap: 28px; align-items: center; }
+    .footer-social a {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #bbb;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-social a:hover { color: #111; }
 
     /* ===== BURGER (visible mobile seulement) ===== */
     .burger { display: none; }
@@ -717,14 +920,19 @@
       #home { padding: 0 24px 56px; }
       .gallery-header, .section-header { padding: 40px 24px 28px; }
       .masonry { columns: 2; }
-      .pricing-grid { grid-template-columns: 1fr; padding: 32px 24px 0; }
-      .pricing-card + .pricing-card { border-left: 0.5px solid #e8e8e8; border-top: none; }
+      .pricing-grid { grid-template-columns: repeat(2,1fr) !important; padding: 32px 24px 0; }
+      .pricing-card + .pricing-card { border-left: none; border-top: none; }
       .pricing-note { padding: 28px 24px 0; }
+      .pricing-options { padding: 36px 24px 0; }
+      .options-grid { grid-template-columns: 1fr; }
+      .bespoke-block { margin: 40px 24px 0; padding: 32px 24px; }
+      .pixieset-banner { margin: 32px 24px 44px; flex-direction: column; align-items: flex-start; }
       .pixieset-banner { margin: 32px 24px 44px; flex-direction: column; align-items: flex-start; }
       .about-grid, .contact-grid { grid-template-columns: 1fr; }
       .about-img-wrap { min-height: 55vw; }
       .about-text-wrap, .contact-left, .contact-right { padding: 52px 28px; }
-      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+      footer { padding: 24px; flex-direction: column; gap: 10px; text-align: center; }
+      .footer-social { justify-content: center; }
     }
 
     /* ===== RESPONSIVE MOBILE (≤600px) ===== */
@@ -759,10 +967,13 @@
       .section-header h2 { font-size: 28px; }
 
       /* Tarifs : 1 carte pleine largeur, padding réduit */
-      .pricing-grid { padding: 24px 16px 0; }
+      .pricing-grid { grid-template-columns: 1fr !important; padding: 24px 16px 0; }
       .pricing-card { padding: 28px 20px 32px; }
       .pricing-amount { font-size: 44px; }
       .pricing-note { padding: 20px 16px 0; }
+      .pricing-options { padding: 28px 16px 0; }
+      .options-grid { grid-template-columns: 1fr; }
+      .bespoke-block { margin: 32px 16px 0; padding: 28px 20px; }
       .pixieset-banner { margin: 24px 16px 36px; padding: 24px 20px; }
 
       /* About : photo compacte */
@@ -776,7 +987,12 @@
       .contact-right { padding: 40px 20px; }
 
       /* Footer */
-      footer { padding: 20px 16px; flex-direction: column; gap: 6px; text-align: center; }
+      footer { padding: 20px 16px; flex-direction: column; gap: 10px; text-align: center; }
+      .footer-social { justify-content: center; }
+      /* Back to top — plus petit sur mobile */
+      #back-top { bottom: 20px; right: 20px; width: 36px; height: 36px; }
+      /* Options 1 colonne sur mobile */
+      .options-grid { grid-template-columns: 1fr; }
 
       /* Lightbox : boutons plus grands pour les pouces */
       .lb-prev, .lb-next { font-size: 22px; padding: 28px 20px; }
@@ -785,6 +1001,14 @@
   </style>
 </head>
 <body>
+
+<!-- SPLASH -->
+<div id="splash"><span class="splash-logo">Frédéric Bourgeois</span></div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg viewBox="0 0 14 14"><polyline points="2,10 7,4 12,10"/></svg>
+</button>
 
 <!-- ===================================================================
      HEADER
@@ -864,7 +1088,10 @@
     <div class="masonry" id="masonry-bnw"></div>
 
     <footer>
-      <span>© 2025 Frédéric Bourgeois</span>
+      <span>© 2026 Frédéric Bourgeois</span>
+      <div class="footer-social">
+        <a href="#" data-en="Instagram" data-fr="Instagram" aria-label="Instagram">Instagram</a>
+      </div>
       <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
     </footer>
   </div>
@@ -885,7 +1112,10 @@
     <div class="masonry" id="masonry-color"></div>
 
     <footer>
-      <span>© 2025 Frédéric Bourgeois</span>
+      <span>© 2026 Frédéric Bourgeois</span>
+      <div class="footer-social">
+        <a href="#" data-en="Instagram" data-fr="Instagram" aria-label="Instagram">Instagram</a>
+      </div>
       <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
     </footer>
   </div>
@@ -901,59 +1131,132 @@
     <p data-en="Private portrait sessions at Paris's most iconic locations. Professional retouching and high-resolution delivery included." data-fr="Séances de portraits privées dans les lieux emblématiques de Paris. Retouche professionnelle et livraison haute résolution incluses.">Private portrait sessions at Paris's most iconic locations. Professional retouching and high-resolution delivery included.</p>
   </div>
 
-  <div class="pricing-grid">
+  <!-- Grille 4 cartes : Discovery · Book · Signature · Prestige -->
+  <div class="pricing-grid" style="grid-template-columns:repeat(4,1fr)">
 
     <!-- DÉCOUVERTE -->
     <div class="pricing-card">
       <p class="pricing-name" data-en="Discovery" data-fr="Découverte">Discovery</p>
       <div class="pricing-amount"><sup>€</sup>190</div>
-      <p class="pricing-desc" data-en="A concise, high-impact session for individuals or couples." data-fr="Une séance courte et percutante pour individuels ou couples.">A concise, high-impact session for individuals or couples.</p>
+      <p class="pricing-desc" data-en="A concise, high-impact session." data-fr="Une séance courte et percutante.">A concise, high-impact session.</p>
       <ul class="pricing-features">
-        <li data-en="45-minute session"                   data-fr="Séance de 45 minutes">45-minute session</li>
-        <li data-en="1 Paris location"                    data-fr="1 lieu parisien">1 Paris location</li>
-        <li data-en="10 retouched photos"                 data-fr="10 photos retouchées">10 retouched photos</li>
-        <li data-en="Online gallery — download &amp; print" data-fr="Galerie en ligne — téléchargement &amp; tirages">Online gallery — download &amp; print</li>
-        <li data-en="Delivered within 7 days"             data-fr="Livraison sous 7 jours">Delivered within 7 days</li>
+        <li data-en="45-minute session"                        data-fr="Séance 45 minutes">45-minute session</li>
+        <li data-en="1 Paris location"                         data-fr="1 lieu parisien">1 Paris location</li>
+        <li data-en="10 retouched photos"                      data-fr="10 photos retouchées">10 retouched photos</li>
+        <li data-en="Colour &amp; black and white versions"    data-fr="Versions couleur &amp; noir &amp; blanc">Colour &amp; black and white versions</li>
+        <li data-en="Private online gallery"                   data-fr="Galerie privée en ligne">Private online gallery</li>
+        <li data-en="Delivered within 7 days"                  data-fr="Livraison sous 7 jours">Delivered within 7 days</li>
+        <li class="opt-extra" data-en="Pre-shoot consultation + €40" data-fr="Consultation pré-séance + 40€">Pre-shoot consultation + €40</li>
       </ul>
       <button class="pricing-cta" onclick="go('contact')" data-en="Book now" data-fr="Réserver">Book now</button>
     </div>
 
-    <!-- SIGNATURE — featured -->
-    <div class="pricing-card featured">
-      <span class="feat-label" data-en="Most popular" data-fr="Le plus demandé">Most popular</span>
+    <!-- SIGNATURE -->
+    <div class="pricing-card">
       <p class="pricing-name" data-en="Signature" data-fr="Signature">Signature</p>
       <div class="pricing-amount"><sup>€</sup>320</div>
-      <p class="pricing-desc" data-en="The full Paris portrait experience — multiple iconic locations." data-fr="L'expérience portrait Paris complète — plusieurs lieux iconiques.">The full Paris portrait experience — multiple iconic locations.</p>
+      <p class="pricing-desc" data-en="The full Paris portrait experience." data-fr="L'expérience portrait Paris complète.">The full Paris portrait experience.</p>
       <ul class="pricing-features">
-        <li data-en="2-hour session"                      data-fr="Séance de 2 heures">2-hour session</li>
-        <li data-en="2–3 Paris locations"                 data-fr="2–3 lieux parisiens">2–3 Paris locations</li>
-        <li data-en="25 retouched photos"                 data-fr="25 photos retouchées">25 retouched photos</li>
-        <li data-en="Online gallery — download &amp; print" data-fr="Galerie en ligne — téléchargement &amp; tirages">Online gallery — download &amp; print</li>
-        <li data-en="Delivered within 5 days"             data-fr="Livraison sous 5 jours">Delivered within 5 jours</li>
-        <li data-en="Costume change included"             data-fr="Changement de tenue inclus">Costume change included</li>
+        <li data-en="2-hour session"                           data-fr="Séance 2 heures">2-hour session</li>
+        <li data-en="2–3 Paris locations"                      data-fr="2–3 lieux parisiens">2–3 Paris locations</li>
+        <li data-en="25 retouched photos"                      data-fr="25 photos retouchées">25 retouched photos</li>
+        <li data-en="Colour &amp; black and white versions"    data-fr="Versions couleur &amp; noir &amp; blanc">Colour &amp; black and white versions</li>
+        <li data-en="Private online gallery"                   data-fr="Galerie privée en ligne">Private online gallery</li>
+        <li data-en="Delivered within 5 days"                  data-fr="Livraison sous 5 jours">Delivered within 5 days</li>
+        <li data-en="Pre-shoot consultation included"          data-fr="Consultation pré-séance incluse">Pre-shoot consultation included</li>
       </ul>
       <button class="pricing-cta" onclick="go('contact')" data-en="Book now" data-fr="Réserver">Book now</button>
     </div>
 
-    <!-- PRESTIGE -->
+    <!-- BOOK -->
     <div class="pricing-card">
-      <p class="pricing-name" data-en="Prestige" data-fr="Prestige">Prestige</p>
-      <div class="pricing-amount"><sup>€</sup>490</div>
-      <p class="pricing-desc" data-en="A fully curated half-day session for a lasting portrait." data-fr="Une demi-journée exclusive pour un portrait d'exception.">A fully curated half-day session for a lasting portrait.</p>
+      <p class="pricing-name" data-en="Book" data-fr="Book">Book</p>
+      <div class="pricing-amount"><sup>€</sup>420</div>
+      <p class="pricing-desc" data-en="Actor &amp; model portfolio — crafted for casting, agency &amp; press." data-fr="Book comédien &amp; modèle — conçu pour le casting, l'agence &amp; la presse.">Actor &amp; model portfolio — crafted for casting, agency &amp; press.</p>
       <ul class="pricing-features">
-        <li data-en="Half-day (up to 4h)"                 data-fr="Demi-journée (jusqu'à 4h)">Half-day (up to 4h)</li>
-        <li data-en="4–5 Paris locations"                 data-fr="4–5 lieux parisiens">4–5 Paris locations</li>
-        <li data-en="50 retouched photos"                 data-fr="50 photos retouchées">50 retouched photos</li>
-        <li data-en="Online gallery — download &amp; print" data-fr="Galerie en ligne — téléchargement &amp; tirages">Online gallery — download &amp; print</li>
-        <li data-en="Delivered within 5 days"             data-fr="Livraison sous 5 jours">Delivered within 5 days</li>
-        <li data-en="Full styling consultation"           data-fr="Consultation style complète">Full styling consultation</li>
-        <li data-en="Priority booking"                    data-fr="Réservation prioritaire">Priority booking</li>
+        <li data-en="3-hour session"                       data-fr="Séance 3 heures">3-hour session</li>
+        <li data-en="3–4 distinct looks"                   data-fr="3–4 looks distincts">3–4 distinct looks</li>
+        <li data-en="35 retouched photos"                  data-fr="35 photos retouchées">35 retouched photos</li>
+        <li data-en="Colour &amp; black and white versions" data-fr="Versions couleur &amp; noir &amp; blanc">Colour &amp; black and white versions</li>
+        <li data-en="Private online gallery"                   data-fr="Galerie privée en ligne">Private online gallery</li>
+        <li data-en="Delivered within 7 days"                  data-fr="Livraison sous 7 jours">Delivered within 7 days</li>
+        <li data-en="Pre-shoot consultation included"          data-fr="Consultation pré-séance incluse">Pre-shoot consultation included</li>
       </ul>
       <button class="pricing-cta" onclick="go('contact')" data-en="Book now" data-fr="Réserver">Book now</button>
+    </div>
+
+    <!-- PRESTIGE — featured -->
+    <div class="pricing-card featured">
+      <span class="feat-label" data-en="Most requested" data-fr="Le plus demandé">Most requested</span>
+      <p class="pricing-name" data-en="Prestige" data-fr="Prestige">Prestige</p>
+      <div class="pricing-amount"><sup>€</sup>590</div>
+      <p class="pricing-desc" data-en="A half-day curated session for a lasting portrait." data-fr="Une demi-journée exclusive pour un portrait d'exception.">A half-day curated session for a lasting portrait.</p>
+      <ul class="pricing-features">
+        <li data-en="Half-day (up to 4h)"                  data-fr="Demi-journée (jusqu'à 4h)">Half-day (up to 4h)</li>
+        <li data-en="4–5 Paris locations"                  data-fr="4–5 lieux parisiens">4–5 Paris locations</li>
+        <li data-en="50 retouched photos"                  data-fr="50 photos retouchées">50 retouched photos</li>
+        <li data-en="Private online gallery"               data-fr="Galerie privée en ligne">Private online gallery</li>
+        <li data-en="Delivered within 5 days"              data-fr="Livraison sous 5 jours">Delivered within 5 days</li>
+        <li data-en="Colour &amp; black and white versions"    data-fr="Versions couleur &amp; noir &amp; blanc">Colour &amp; black and white versions</li>
+        <li data-en="Styling consultation"                     data-fr="Consultation style">Styling consultation</li>
+        <li data-en="Pre-shoot consultation included"          data-fr="Consultation pré-séance incluse">Pre-shoot consultation included</li>
+        <li data-en="Priority booking"                         data-fr="Réservation prioritaire">Priority booking</li>
+      </ul>
+      <button class="pricing-cta" onclick="go('contact')" data-en="Book now" data-fr="Réserver">Book now</button>
+    </div>
+  </div>  </div>
+
+  <!-- OPTIONS -->
+  <div class="pricing-options">
+    <p class="options-title" data-en="Add-ons &amp; options" data-fr="Options &amp; suppléments">Add-ons &amp; options</p>
+    <div class="options-grid">
+      <div class="opt-item">
+        <span class="opt-label" data-en="Additional hour" data-fr="Heure supplémentaire">Additional hour</span>
+        <span class="opt-price">+ €90</span>
+      </div>
+      <div class="opt-item">
+        <span class="opt-label" data-en="Additional retouched photo" data-fr="Photo supplémentaire retouchée">Additional retouched photo</span>
+        <span class="opt-price">+ €12</span>
+      </div>
+      <div class="opt-item">
+        <span class="opt-label" data-en="Express delivery (72 h)" data-fr="Livraison express (72 h)">Express delivery (72 h)</span>
+        <span class="opt-price">+ €60</span>
+      </div>
+      <div class="opt-item">
+        <span class="opt-label" data-en="Fine art print — museum quality" data-fr="Tirage fine art — qualité musée">Fine art print — museum quality</span>
+        <span class="opt-price" data-en="from €80" data-fr="dès 80€">from €80</span>
+      </div>
+      <div class="opt-item">
+        <span class="opt-label" data-en="Artisanal photobook — linen or leather cover" data-fr="Album artisanal — couverture lin ou cuir">Artisanal photobook — linen or leather cover</span>
+        <span class="opt-price" data-en="from €220" data-fr="dès 220€">from €220</span>
+      </div>
+      <div class="opt-item">
+        <span class="opt-label" data-en="Gift card — any amount" data-fr="Carte cadeau — tout montant">Gift card — any amount</span>
+        <span class="opt-price opt-link" onclick="go('contact')" data-en="contact →" data-fr="contact →">contact →</span>
+      </div>
+      <div class="opt-item">
+        <span class="opt-label" data-en="Studio session option" data-fr="Option séance en studio">Studio session option</span>
+        <span class="opt-price" data-en="on quote" data-fr="sur devis">on quote</span>
+      </div>
+      <div class="opt-item">
+        <span class="opt-label" data-en="Commercial / editorial licence" data-fr="Licence commerciale / éditoriale">Commercial / editorial licence</span>
+        <span class="opt-price" data-en="on quote" data-fr="sur devis">on quote</span>
+      </div>
+      <div class="opt-item">
+        <span class="opt-label" data-en="Travel outside Île-de-France" data-fr="Déplacement hors Île-de-France">Travel outside Île-de-France</span>
+        <span class="opt-price" data-en="on quote" data-fr="sur devis">on quote</span>
+      </div>
     </div>
   </div>
 
-  <p class="pricing-note" data-en="All sessions take place at iconic Paris locations: Trocadéro, Bir-Hakeim, Haussmann boulevards and more. Travel within Paris is included. Custom requests welcome — contact me for a tailored quote." data-fr="Toutes les séances se déroulent dans les lieux emblématiques de Paris : Trocadéro, Bir-Hakeim, les grands boulevards haussmanniens et plus encore. Les déplacements dans Paris sont inclus. Demandes sur mesure bienvenues — contactez-moi pour un devis personnalisé.">All sessions take place at iconic Paris locations: Trocadéro, Bir-Hakeim, Haussmann boulevards and more. Travel within Paris is included. Custom requests welcome — contact me for a tailored quote.</p>
+  <!-- ENCART SUR-MESURE -->
+  <div class="bespoke-block">
+    <p class="bespoke-eyebrow" data-en="A bespoke project?" data-fr="Un projet sur-mesure ?">A bespoke project?</p>
+    <p class="bespoke-text" data-en="Every project is unique. Contact me to discuss your vision and receive a personalised quote tailored to your needs." data-fr="Chaque projet est unique. Contactez-moi pour discuter de votre vision et recevoir un devis personnalisé adapté à vos besoins.">Every project is unique. Contact me to discuss your vision and receive a personalised quote tailored to your needs.</p>
+    <button class="bespoke-cta" onclick="go('contact')" data-en="Get in touch →" data-fr="Me contacter →">Get in touch →</button>
+  </div>
+
+  <p class="pricing-note" data-en="All sessions take place at iconic Paris locations — Trocadéro, Bir-Hakeim, the grand Haussmann boulevards and more. Travel within Paris is included in all packages." data-fr="Toutes les séances se déroulent dans les lieux emblématiques de Paris — Trocadéro, Bir-Hakeim, les grands boulevards haussmanniens et plus encore. Les déplacements dans Paris sont inclus dans tous les forfaits.">All sessions take place at iconic Paris locations — Trocadéro, Bir-Hakeim, the grand Haussmann boulevards and more. Travel within Paris is included in all packages.</p>
 
   <!-- ===== BANDEAU PIXIESET ===== -->
   <div class="pixieset-banner">
@@ -965,7 +1268,10 @@
   </div>
 
   <footer>
-    <span>© 2025 Frédéric Bourgeois</span>
+    <span>© 2026 Frédéric Bourgeois</span>
+    <div class="footer-social">
+      <a href="#" data-en="Instagram" data-fr="Instagram" aria-label="Instagram">Instagram</a>
+    </div>
     <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
   </footer>
 </section>
@@ -993,7 +1299,10 @@
     </div>
 
     <footer>
-      <span>© 2025 Frédéric Bourgeois</span>
+      <span>© 2026 Frédéric Bourgeois</span>
+      <div class="footer-social">
+        <a href="#" data-en="Instagram" data-fr="Instagram" aria-label="Instagram">Instagram</a>
+      </div>
       <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
     </footer>
   </div>
@@ -1045,11 +1354,13 @@
           <div class="form-field">
             <label data-en="Session type" data-fr="Type de séance">Session type</label>
             <select name="session">
-              <option value=""            data-en="Select…"             data-fr="Choisir…">Select…</option>
-              <option value="discovery"   data-en="Discovery — €190"    data-fr="Découverte — 190€">Discovery — €190</option>
-              <option value="signature"   data-en="Signature — €320"    data-fr="Signature — 320€">Signature — €320</option>
-              <option value="prestige"    data-en="Prestige — €490"     data-fr="Prestige — 490€">Prestige — €490</option>
-              <option value="custom"      data-en="Custom enquiry"      data-fr="Demande sur mesure">Custom enquiry</option>
+              <option value=""            data-en="Select…"                data-fr="Choisir…">Select…</option>
+              <option value="discovery"   data-en="Discovery — €190"       data-fr="Découverte — 190€">Discovery — €190</option>
+              <option value="book"        data-en="Book — €420"            data-fr="Book — 420€">Book — €420</option>
+              <option value="signature"   data-en="Signature — €320"       data-fr="Signature — 320€">Signature — €320</option>
+              <option value="prestige"    data-en="Prestige — €590"        data-fr="Prestige — 590€">Prestige — €590</option>
+              <option value="giftcard"    data-en="Gift card"              data-fr="Carte cadeau">Gift card</option>
+              <option value="custom"      data-en="Custom / bespoke"       data-fr="Demande sur mesure">Custom / bespoke</option>
             </select>
           </div>
           <div class="form-field">
@@ -1062,7 +1373,10 @@
     </div>
 
     <footer>
-      <span>© 2025 Frédéric Bourgeois</span>
+      <span>© 2026 Frédéric Bourgeois</span>
+      <div class="footer-social">
+        <a href="#" data-en="Instagram" data-fr="Instagram" aria-label="Instagram">Instagram</a>
+      </div>
       <span data-en="All rights reserved" data-fr="Tous droits réservés">All rights reserved</span>
     </footer>
   </div>
@@ -1079,7 +1393,7 @@
   </div>
   <button class="lb-prev" id="lb-prev" onclick="lbNav(-1)">&#8592;</button>
   <button class="lb-next" id="lb-next" onclick="lbNav(1)">&#8594;</button>
-  <span class="lb-counter" id="lb-count"></span>
+  
 </div>
 
 
@@ -1093,6 +1407,16 @@
   let lbIdx = 0;
   const lbSize    = { bnw: 0, color: 0 };
   const lbSources = { bnw: [], color: [] };
+
+  /* ---- Splash — disparaît après l'animation ---- */
+  const splash = document.getElementById('splash');
+  if (splash) setTimeout(() => splash.remove(), 2500);
+
+  /* ---- Back to top ---- */
+  const backTop = document.getElementById('back-top');
+  window.addEventListener('scroll', () => {
+    if (backTop) backTop.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
 
   /* ================================================================
      FIX 1 — Navigation : header toujours sombre, texte toujours blanc
@@ -1113,15 +1437,16 @@
       hdr.classList.add('page-bg');
     }
 
-    // FIX 2 — scroll : repositionne en haut puis descend sous le header fixe
+    // FIX 2 — scroll : remonte en haut, puis positionne le titre juste sous le header
     window.scrollTo({ top: 0, behavior: 'instant' });
     if (id !== 'home') {
-      // Légère pause pour laisser le DOM s'afficher, puis scroll sous le header (80px)
       setTimeout(() => {
         const section = document.getElementById(id);
-        const firstContent = section.querySelector('.gallery-header, .section-header, .about-grid, .contact-grid');
-        if (firstContent) {
-          const top = firstContent.getBoundingClientRect().top + window.scrollY - 80;
+        // On cible le h2 du titre directement pour coller à la barre du haut
+        const target = section.querySelector('.gallery-header h2, .section-header h2, .about-grid, .contact-grid');
+        if (target) {
+          const hdrH = document.getElementById('hdr').offsetHeight;
+          const top  = target.getBoundingClientRect().top + window.scrollY - hdrH - 10;
           window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
         }
       }, 30);
@@ -1351,10 +1676,18 @@
     resetZoom(false);
     const src = lbSources[lbGallery][lbIdx] || '';
     content.innerHTML = `<img class="lb-img" src="${src}" alt="Portrait">`;
-    document.getElementById('lb-count').textContent = `${lbIdx + 1} / ${lbSize[lbGallery]}`;
+    
   }
 
   /* ---- Clavier ---- */
+  /* ---- Protection photos (élégante, invisible) ---- */
+  document.addEventListener('contextmenu', e => {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
+  document.addEventListener('dragstart', e => {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
+
   document.addEventListener('keydown', e => {
     if (!document.getElementById('lightbox').classList.contains('open')) return;
     if (e.key === 'Escape')     lbClose();
@@ -1401,5 +1734,23 @@
   }
 </script>
 
+
+<!-- ═══ SEO CONTENT — visible moteurs, invisible visuellement ═══ -->
+<div aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;clip:rect(0,0,0,0)">
+  <h1>Frédéric Bourgeois — Photographe de Portrait à Paris</h1>
+  <h2>Portrait photographer in Paris, France</h2>
+  <p>Professional portrait photographer based in Paris, France. Offering cinematic, high-contrast portrait photography sessions at Paris's most iconic locations including Trocadéro, Bir-Hakeim bridge, Champs-Élysées, Montmartre, Saint-Germain-des-Prés, and the grand Haussmann boulevards. Fine art photography, black and white portraits, colour portraits, actor and model books. Private gallery delivery and museum-quality fine art prints. Available in English and French. Book a portrait session in Paris today.</p>
+  <p>Photographe professionnel basé à Paris. Séances de photographie portrait cinématographique et haut contraste dans les lieux emblématiques de Paris : Trocadéro, Bir-Hakeim, Champs-Élysées, Montmartre, Saint-Germain-des-Prés. Photographie fine art, portraits noir et blanc, portraits couleur, books comédiens et modèles. Livraison galerie privée et tirages fine art qualité musée. Disponible en anglais et en français.</p>
+  <ul>
+    <li>portrait photographer Paris</li><li>photographe portrait Paris</li>
+    <li>fine art photography Paris</li><li>photographie fine art Paris</li>
+    <li>portrait session Paris France</li><li>séance photo portrait Paris</li>
+    <li>couple portrait Paris</li><li>family portrait Paris</li>
+    <li>actor book photographer Paris</li><li>book comédien Paris</li>
+    <li>Trocadéro photographer</li><li>Bir-Hakeim photographer</li>
+    <li>Eiffel Tower portrait session</li><li>luxury portrait photography</li>
+    <li>international photographer Paris</li><li>English speaking photographer Paris</li>
+  </ul>
+</div>
 </body>
 </html>
